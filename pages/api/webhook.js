@@ -2,8 +2,15 @@
 const crypto = require('crypto');
 
 export default async function webhook(req, res) {
+  if(req != undefined){
+    console.log('req');
+    console.log(req);
+  }
 
-  console.log(req);
+  if(res != undefined){
+    console.log('res');
+    console.log(res);
+  }
 
   const query = req.query;
   const { crc_token } = query;
