@@ -7,8 +7,13 @@ export default async function webhook(req, res) {
 
   if(crc_token != undefined){
     return(
-      res.status(200).json({
-        response_token: 'sha256=' + crypto.createHmac('sha256', process.env.CONSUMER_SECRET).update(crc_token).digest('base64')
+      res.status(201).json({
+        errors: [
+          {
+            code : 201,
+            message: "crc_token is undefined."
+          }
+        ]
       })
     );
   }
