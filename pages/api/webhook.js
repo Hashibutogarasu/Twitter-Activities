@@ -1,17 +1,15 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 const crypto = require('crypto');
 
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @returns 
+ */
 export default async function webhook(req, res) {
-  if(req != undefined){
-    console.log('req');
-    console.log(req.body);
-  }
-
-  if(res != undefined){
-    console.log('res');
-    console.log(res);
-  }
-
+  console.log(req.body);
+  
   const query = req.query;
   const { crc_token } = query;
   const CONSUMER_SECRET = process.env.NEXT_PUBLIC_CONSUMER_SECRET;
