@@ -7,7 +7,7 @@ export default async function webhook(req, res) {
 
   return(
     res.status(200).json({
-      response_token: crypto.createHmac('sha256', process.env.consumer_secret).update(crc_token).digest('base64')
+      response_token: crypto.createHmac('sha256', process.env.CONSUMER_SECRET).update(crc_token).digest('base64')
     })
   );
 }
