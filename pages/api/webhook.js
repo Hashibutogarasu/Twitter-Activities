@@ -3,7 +3,7 @@ const crypto = require('crypto');
 
 export default async function webhook(req, res) {
 
-  console.log(res);
+  console.log(req);
 
   const query = req.query;
   const { crc_token } = query;
