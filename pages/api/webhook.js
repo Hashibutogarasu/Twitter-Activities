@@ -5,7 +5,9 @@ export default function webhook(req, res) {
   const query = req.query;
   const { consumer_key , crc_token } = query;
 
-  res.status(200).json({
-    response_token: crypto.createHmac('sha256', consumer_key).update(query.crc_token).digest('base64')
-  });
+  return(
+    res.status(200).json({
+      response_token: crypto.createHmac('sha256', consumer_key).update(query.crc_token).digest('base64')
+    })
+  )
 }
