@@ -8,14 +8,14 @@ export default async function webhook(req, res) {
   if(!crc_token == undefined){
     return(
       res.status(200).json({
-        response_token: crypto.createHmac('sha256', process.env.CONSUMER_SECRET).update(crc_token).digest('base64')
+        response_token: 'sha256=' + crypto.createHmac('sha256', process.env.CONSUMER_SECRET).update(crc_token).digest('base64')
       })
     );
   }
   else{
     return(
       res.status(200).json({
-        response_token: crypto.createHmac('sha256', process.env.CONSUMER_SECRET).update('').digest('base64')
+        response_token: 'sha256=' + crypto.createHmac('sha256', process.env.CONSUMER_SECRET).update('').digest('base64')
       })
     );
   }
