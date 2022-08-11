@@ -5,7 +5,7 @@ export default async function webhook(req, res) {
   const query = req.query;
   const { crc_token } = query;
 
-  if(crc_token != undefined){
+  if(crc_token == undefined){
     return(
       res.status(201).json({
         errors: [
