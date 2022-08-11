@@ -4,7 +4,7 @@ const crypto = require('crypto');
 export default async function webhook(req, res) {
   if(req != undefined){
     console.log('req');
-    console.log(req);
+    console.log(req.body);
   }
 
   if(res != undefined){
