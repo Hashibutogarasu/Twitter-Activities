@@ -1,4 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+const crypto = require('crypto');
 
 export default async function webhook(req, res) {
   const query = req.query;
@@ -6,15 +7,15 @@ export default async function webhook(req, res) {
 
   if(crc_token == undefined || crc_token == ''){
     return(
-      res.status(200).json({
-        response_token: `sha256=${crypto.createHmac('sha256', process.env.CONSUMER_SECRET).update('').digest('base64')}`
-      })
+      res.status(201).json({})
     );
+  }
+
+  const json = {
+    response_token: `sha256=${crypto.createHmac('sha256', process.env.CONSUMER_SECRET).update(crc_token).digest('base64')}`
   }
   
   return(
-    res.status(200).json({
-      response_token: `sha256=${crypto.createHmac('sha256', process.env.CONSUMER_SECRET).update(crc_token).digest('base64')}`
-    })
+    res.status(201).json(json)
   );
 }
