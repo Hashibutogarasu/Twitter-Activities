@@ -4,7 +4,7 @@ const crypto = require('crypto');
 export default async function webhook(req, res) {
   const query = req.query;
   const { crc_token } = query;
-  const CONSUMER_SECRET = process.env.CONSUMER_SECRET;
+  const CONSUMER_SECRET = process.env.NEXT_PUBLIC_CONSUMER_SECRET;
 
   if(crc_token == undefined || crc_token == '' || CONSUMER_SECRET == undefined || CONSUMER_SECRET == ''){
     return(
