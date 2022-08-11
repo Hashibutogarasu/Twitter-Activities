@@ -8,8 +8,8 @@ const crypto = require('crypto');
  * @returns 
  */
 export default async function webhook(req, res) {
-  console.log(req.body);
-  
+  console.log(JSON.stringify(req.body));
+
   const query = req.query;
   const { crc_token } = query;
   const CONSUMER_SECRET = process.env.NEXT_PUBLIC_CONSUMER_SECRET;
