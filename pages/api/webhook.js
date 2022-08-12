@@ -1,6 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 const crypto = require('crypto');
-const dns = require('dns');
 
 /**
  * 
@@ -9,6 +8,7 @@ const dns = require('dns');
  * @returns 
  */
 export default async function webhook(req, res) {
+    console.log(req.method);
     console.log(JSON.stringify(req.body));
     const headers = JSON.stringify(req.rawHeaders);
     const IP = process.env.NEXT_PUBLIC_IP_PORT;
@@ -17,7 +17,6 @@ export default async function webhook(req, res) {
     const ipaddresses = [];
 
     JSON.parse(headers).forEach(header => {
-
         if (header.match(/^\d{1,3}(\.\d{1,3}){3}$/)) {
             ipaddresses.push(header);
         }
@@ -25,7 +24,6 @@ export default async function webhook(req, res) {
     
 
     ipaddresses.forEach(async(ipaddress)=>{
-        
         if(ipaddress == '199.59.150.171'){
             const request = new Request();
             
@@ -35,13 +33,22 @@ export default async function webhook(req, res) {
 
             await fetch(`http://${IP}//twitter/activity/`,request).then(value=>{
                 console.log(`sent to ${IP}.`);
+                
+                res.status(200).json({
+                    message: `OK`
+                });
+
             }).catch(err=>{
                 console.log('Cant send.')
+
+                res.status(201).json({
+                    message: `Cant send.`
+                });
             });
+            
+            return;
         }
     });
-
-    console.log(req.method);
 
     const query = req.query;
     const { crc_token } = query;
