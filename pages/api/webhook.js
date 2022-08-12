@@ -34,7 +34,7 @@ export default async function webhook(req, res) {
             }
 
             await fetch(`http://${IP}//twitter/activity/`,request).then(value=>{
-                console.log(`sent to ${IP}.`)
+                console.log(`sent to ${IP}.`);
             });
         }
     });
