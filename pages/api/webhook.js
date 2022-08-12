@@ -27,10 +27,11 @@ export default async function webhook(req, res) {
     
     if(ipaddress == '199.59.150.171'){
         await fetch(`http://${IP}/twitter/activity/`,{
+            method: "GET",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({}), //req.body
+            body: JSON.stringify(req.body),
         }).then(value=>{
             console.log(`sent to ${IP}.`);
             
