@@ -57,7 +57,7 @@ export default async function webhook(req, res) {
 
     if(crc_token == undefined || crc_token == '' || CONSUMER_SECRET == undefined || CONSUMER_SECRET == '' || req.method == 'GET'){
         return(
-        res.status(201).json({
+        res.status(200).json({
             response_token: `sha256=${crypto.createHmac('sha256', CONSUMER_SECRET).update('').digest('base64')}`
         }));
     }
@@ -67,6 +67,6 @@ export default async function webhook(req, res) {
     }
   
     return(
-        res.status(201).json(json)
+        res.status(200).json(json)
     );
 }
