@@ -30,7 +30,7 @@ export default async function webhook(req, res) {
             if (err) throw err;
      
             // console.log(data);
-     
+
             console.log(parser.parseWhoIsData(data));
         });
     });
