@@ -9,10 +9,7 @@ const { NextApiRequest, NextApiResponse } = require('next/dist/shared/lib/utils'
  * @returns 
  */
 export default async function webhook(req, res) {
-    console.log(req.body);
     const request_json = JSON.stringify(req.body);
-    console.log(request_json);
-
     const headers = JSON.stringify(req.rawHeaders);
     const IP = process.env.NEXT_PUBLIC_IP_PORT;
 
@@ -47,15 +44,6 @@ export default async function webhook(req, res) {
                 message: `Cant send.`
             });
         });
-
-        const ws = new WebSocket(`$ws://${process.env.NEXT_PUBLIC_IP_PORT_WS}`);
-
-        ws.onopen = e => {
-            console.log('接続ヨシ！');
-        }
-
-        ws.send(request_json);
-        
         return;
     }
 
