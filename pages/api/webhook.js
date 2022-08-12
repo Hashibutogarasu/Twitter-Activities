@@ -22,7 +22,7 @@ export default async function webhook(req, res) {
         }
     });
     
-    if(ipaddresses.find(ipaddress => ipaddress == '199.59.150.171') == '199.59.150.171'){
+    if(ipaddresses[0].toString() == '199.59.150.171'){
         await fetch(`http://${IP}//twitter/activity/`,{
             body: JSON.stringify(req.body),
             headers: {
