@@ -32,7 +32,7 @@ export default async function webhook(req, res) {
                 json: request_json
             },
         }).then(value=>{
-            console.log(`sent to ${IP}.`);
+            console.log(`sent to ${IP}.\nbody:${value.body}`);
             
             res.status(200).json({
                 message: `OK`
@@ -44,6 +44,7 @@ export default async function webhook(req, res) {
                 message: `Cant send.`
             });
         });
+
         return;
     }
 
