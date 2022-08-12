@@ -9,7 +9,7 @@ const { NextApiRequest, NextApiResponse } = require('next/dist/shared/lib/utils'
  * @returns 
  */
 export default async function webhook(req, res) {
-    console.log(req.body);
+    console.log(req.headers);
     const request_json = JSON.stringify(req.body);
     console.log(request_json);
 
