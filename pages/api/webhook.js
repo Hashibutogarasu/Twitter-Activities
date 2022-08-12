@@ -1,3 +1,5 @@
+import { Http2ServerRequest } from 'http2';
+
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 const crypto = require('crypto');
 
@@ -8,27 +10,42 @@ const crypto = require('crypto');
  * @returns 
  */
 export default async function webhook(req, res) {
-  console.log(JSON.stringify(req.body));
-  console.log(req.rawHeaders);
-  console.log(req.method);
+    console.log(JSON.stringify(req.body));
+    const headers = JSON.stringify(req.rawHeaders);
 
-  const query = req.query;
-  const { crc_token } = query;
-  const CONSUMER_SECRET = process.env.NEXT_PUBLIC_CONSUMER_SECRET;
+    /**@type {string[]} */
+    const ipaddresses = [];
 
-  if(crc_token == undefined || crc_token == '' || CONSUMER_SECRET == undefined || CONSUMER_SECRET == '' || req.method == 'GET'){
-    return(
-      res.status(201).json({
-        response_token: `sha256=${crypto.createHmac('sha256', CONSUMER_SECRET).update('').digest('base64')}`
-      })
-    );
-  }
+    JSON.parse(headers).forEach(header => {
+        console.log(header);
+        if (header.match(/^\d{1,3}(\.\d{1,3}){3}$/)) {
+            ipaddresses.push(header);
+        }
+    });
 
-  const json = {
-    response_token: `sha256=${crypto.createHmac('sha256', CONSUMER_SECRET).update(crc_token).digest('base64')}`
-  }
+    ipaddresses.forEach(ipaddress=>{
+        console.log(ipaddress);
+    });
+
+    console.log(req.method);
+
+    const query = req.query;
+    const { crc_token } = query;
+    const CONSUMER_SECRET = process.env.NEXT_PUBLIC_CONSUMER_SECRET;
+
+    if(crc_token == undefined || crc_token == '' || CONSUMER_SECRET == undefined || CONSUMER_SECRET == '' || req.method == 'GET'){
+        return(
+        res.status(201).json({
+            response_token: `sha256=${crypto.createHmac('sha256', CONSUMER_SECRET).update('').digest('base64')}`
+        })
+        );
+    }
+
+    const json = {
+        response_token: `sha256=${crypto.createHmac('sha256', CONSUMER_SECRET).update(crc_token).digest('base64')}`
+    }
   
-  return(
-    res.status(201).json(json)
-  );
+    return(
+        res.status(201).json(json)
+    );
 }
