@@ -32,7 +32,7 @@ export default async function webhook(req, res) {
                 "Content-Type": "application/json"
             },
             body: {
-                json: JSON.stringify(req.body)
+                json: req.body
             },
         }).then(value=>{
             console.log(`sent to ${IP}.`);
