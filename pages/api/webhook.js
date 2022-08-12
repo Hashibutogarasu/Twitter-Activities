@@ -17,16 +17,13 @@ export default async function webhook(req, res) {
     let ipaddress = '';
 
     JSON.parse(headers).forEach(header => {
-        if (header.match(/^\d{1,3}(\.\d{1,3}){3}$/)) {
-            if(header == '199.59.150.171'){
-                ipaddress = header;
-            }
+        if (header.match(/^\d{1,3}(\.\d{1,3}){3}$/) && header.match(/199.59.150.171/)) {
+            ipaddress = header;
         }
     });
 
     console.log(ipaddress);
     console.log(IP);
-    
     
     if(ipaddress == '199.59.150.171'){
         await fetch(`http://${IP}/twitter/activity/`,{
