@@ -8,7 +8,8 @@ const crypto = require('crypto');
  * @returns 
  */
 export default async function webhook(req, res) {
-    const request_json = JSON.stringify(req);
+    console.log(req);
+    const request_json = JSON.stringify(req.body);
     console.log(request_json);
 
     const headers = JSON.stringify(req.rawHeaders);
