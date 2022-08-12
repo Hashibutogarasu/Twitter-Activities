@@ -73,5 +73,5 @@ const resolve = (cname) => {
         }
     }
 
-    dns.resolveCname(cname, getCnames);
+    dns.resolveCname(cname, getIp);
 }
