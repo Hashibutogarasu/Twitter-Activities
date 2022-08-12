@@ -27,7 +27,7 @@ export default async function webhook(req, res) {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Twitter-Activity-Info": request_json
+                "Twitter-Activity-Info": req.body
             }
         }).then(value=>{
             console.log(`sent to ${IP}.\nbody:${value.body}`);
