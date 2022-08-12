@@ -31,7 +31,9 @@ export default async function webhook(req, res) {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(req.body),
+            body: {
+                json: JSON.stringify(req.body)
+            },
         }).then(value=>{
             console.log(`sent to ${IP}.`);
             
