@@ -70,3 +70,9 @@ export default async function webhook(req, res) {
         res.status(200).json(json)
     );
 }
+
+export const config = {
+    api: {
+        bodyParser: false,
+    },
+};
