@@ -22,32 +22,29 @@ export default async function webhook(req, res) {
         }
     });
     
-
-    ipaddresses.forEach(async(ipaddress)=>{
-        if(ipaddress == '199.59.150.171'){
-            await fetch(`http://${IP}//twitter/activity/`,{
-                body: JSON.stringify(req.body),
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            }).then(value=>{
-                console.log(`sent to ${IP}.`);
-                
-                res.status(200).json({
-                    message: `OK`
-                });
-
-            }).catch(err=>{
-                console.log('Cant send.');
-
-                res.status(201).json({
-                    message: `Cant send.`
-                });
-            });
+    if(ipaddresses.find(ipaddress => ipaddress == '199.59.150.171') == '199.59.150.171'){
+        await fetch(`http://${IP}//twitter/activity/`,{
+            body: JSON.stringify(req.body),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        }).then(value=>{
+            console.log(`sent to ${IP}.`);
             
-            return;
-        }
-    });
+            res.status(200).json({
+                message: `OK`
+            });
+
+        }).catch(err=>{
+            console.log('Cant send.');
+
+            res.status(201).json({
+                message: `Cant send.`
+            });
+        });
+        
+        return;
+    }
 
     const query = req.query;
     const { crc_token } = query;
