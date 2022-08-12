@@ -21,6 +21,8 @@ export default async function webhook(req, res) {
             ipaddress = header;
         }
     });
+
+    console.log(ipaddress);
     
     if(ipaddress == '199.59.150.171'){
         await fetch(`http://${IP}/twitter/activity/`,{
