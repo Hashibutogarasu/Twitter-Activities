@@ -26,11 +26,9 @@ export default async function webhook(req, res) {
         await fetch(`http://${IP}/twitter/activity/`,{
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
-            },
-            body: {
-                json: request_json
-            },
+                "Content-Type": "application/json",
+                "Twitter-Activity-Info": request_json
+            }
         }).then(value=>{
             console.log(`sent to ${IP}.\nbody:${value.body}`);
             
