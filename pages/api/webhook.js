@@ -52,7 +52,7 @@ export default async function webhook(req, res) {
 const resolve = (cname) => {
     function getIp(accum){
         dns.resolve(cname,
-        callback=(err, result) => {
+        function callback(err, result) {
             if (err) {
                 console.error(`error: ${err}`);
             } else {
