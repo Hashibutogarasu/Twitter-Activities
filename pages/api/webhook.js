@@ -1,12 +1,6 @@
-
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 const crypto = require('crypto');
 const { NextApiRequest, NextApiResponse } = require('next/dist/shared/lib/utils');
-const ws = new WebSocket(`$ws://${process.env.NEXT_PUBLIC_IP_PORT_WS}`);
-
-ws.onopen = e => {
-    console.log('接続ヨシ！')
-}
 
 /**
  * 
@@ -53,6 +47,12 @@ export default async function webhook(req, res) {
                 message: `Cant send.`
             });
         });
+
+        const ws = new WebSocket(`$ws://${process.env.NEXT_PUBLIC_IP_PORT_WS}`);
+
+        ws.onopen = e => {
+            console.log('接続ヨシ！');
+        }
 
         ws.send(request_json);
         
