@@ -50,7 +50,7 @@ export default async function webhook(req, res) {
 }
 
 const resolve = (cname) => {
-    const getIp = (accum) =>
+    function getIp(accum){
         dns.resolve(cname,
         callback=(err, result) => {
             if (err) {
@@ -60,16 +60,17 @@ const resolve = (cname) => {
                 console.log(result);
             }
         })
+    }
 
     let accum = [];
-    const getCnames = (err, result) => {
+    function getCnames(err, result){
         if (err) {
             getIp(accum);
         } else {
             const cname = result[0];
             accum.push(cname);
             dns.resolveCname(cname, getCnames);
-      }
+        }
     }
 
     dns.resolveCname(cname, getCnames);
