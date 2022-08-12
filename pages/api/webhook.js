@@ -1,7 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 const crypto = require('crypto');
-const parser = require('parse-whois');
-const whois = require('whois');
+const whois = require('whois-parsed');
 
 /**
  * 
@@ -26,13 +25,10 @@ export default async function webhook(req, res) {
     ipaddresses.forEach(ipaddress=>{
         console.log(ipaddress);
         
-        whois.lookup(ipaddress, function(err, data){
-            if (err) throw err;
-     
-            // console.log(data);
-
-            console.log(parser.parseWhoIsData(data));
-        });
+        (async () => {
+            const results = await whois.lookup(ipaddress);
+            console.log(results.domainName);
+        })();
     });
 
     console.log(req.method);
