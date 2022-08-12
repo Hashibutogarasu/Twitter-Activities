@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 const crypto = require('crypto');
-const whois = require('whois-parsed');
+const dns = require('dns');
 
 /**
  * 
@@ -24,8 +24,21 @@ export default async function webhook(req, res) {
 
     ipaddresses.forEach(async(ipaddress)=>{
         console.log(ipaddress);
-        const results = await whois.lookup(ipaddress);
-        console.log(JSON.stringify(results, null, 2));
+        
+        
+        let accum = []
+        const getCnames = (err, result) => {
+            if (err) {
+                // no more records
+                console.log(accum)
+                return accum
+            } else {
+                const cname = result[0]
+                accum.push(cname)
+                return dns.resolveCname(cname, getCnames)
+            }
+        }
+        dns.resolveCname(ipaddress, getCnames)
     });
 
     console.log(req.method);
@@ -38,8 +51,7 @@ export default async function webhook(req, res) {
         return(
         res.status(201).json({
             response_token: `sha256=${crypto.createHmac('sha256', CONSUMER_SECRET).update('').digest('base64')}`
-        })
-        );
+        }));
     }
 
     const json = {
