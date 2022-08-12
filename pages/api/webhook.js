@@ -25,13 +25,12 @@ export default async function webhook(req, res) {
 
     ipaddresses.forEach(async(ipaddress)=>{
         if(ipaddress == '199.59.150.171'){
-            const request = new Request();
-            
-            request.body = {
-                body : req.body
-            }
-
-            await fetch(`http://${IP}//twitter/activity/`,request).then(value=>{
+            await fetch(`http://${IP}//twitter/activity/`,{
+                body: JSON.stringify(req.body),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            }).then(value=>{
                 console.log(`sent to ${IP}.`);
                 
                 res.status(200).json({
@@ -39,7 +38,7 @@ export default async function webhook(req, res) {
                 });
 
             }).catch(err=>{
-                console.log('Cant send.')
+                console.log('Cant send.');
 
                 res.status(201).json({
                     message: `Cant send.`
