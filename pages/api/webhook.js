@@ -24,21 +24,7 @@ export default async function webhook(req, res) {
 
     ipaddresses.forEach(async(ipaddress)=>{
         console.log(ipaddress);
-        
-        
-        let accum = []
-        const getCnames = (err, result) => {
-            if (err) {
-                // no more records
-                console.log(accum)
-                return accum
-            } else {
-                const cname = result[0]
-                accum.push(cname)
-                return dns.resolveCname(cname, getCnames)
-            }
-        }
-        dns.resolveCname(ipaddress, getCnames)
+        resolve(ipaddress);
     });
 
     console.log(req.method);
@@ -61,4 +47,30 @@ export default async function webhook(req, res) {
     return(
         res.status(201).json(json)
     );
+}
+
+const resolve = (cname) => {
+    const getIp = (accum) =>
+        dns.resolve(cname,
+        callback=(err, result) => {
+            if (err) {
+                console.error(`error: ${err}`);
+            } else {
+                result.push.apply(result, accum);
+                console.log(result);
+            }
+        })
+
+    let accum = [];
+    const getCnames = (err, result) => {
+        if (err) {
+            getIp(accum);
+        } else {
+            const cname = result[0];
+            accum.push(cname);
+            dns.resolveCname(cname, getCnames);
+      }
+    }
+
+    dns.resolveCname(cname, getCnames);
 }
