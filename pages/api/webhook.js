@@ -9,12 +9,14 @@ const crypto = require('crypto');
  */
 export default async function webhook(req, res) {
   console.log(JSON.stringify(req.body));
+  console.log(req.rawHeaders);
+  console.log(req.method);
 
   const query = req.query;
   const { crc_token } = query;
   const CONSUMER_SECRET = process.env.NEXT_PUBLIC_CONSUMER_SECRET;
 
-  if(crc_token == undefined || crc_token == '' || CONSUMER_SECRET == undefined || CONSUMER_SECRET == ''){
+  if(crc_token == undefined || crc_token == '' || CONSUMER_SECRET == undefined || CONSUMER_SECRET == '' || req.method == 'GET'){
     return(
       res.status(201).json({
         response_token: `sha256=${crypto.createHmac('sha256', CONSUMER_SECRET).update('').digest('base64')}`
