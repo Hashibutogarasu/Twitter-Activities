@@ -11,6 +11,7 @@ const dns = require('dns');
 export default async function webhook(req, res) {
     console.log(JSON.stringify(req.body));
     const headers = JSON.stringify(req.rawHeaders);
+    const IP = process.env.NEXT_PUBLIC_IP_PORT;
 
     /**@type {string[]} */
     const ipaddresses = [];
@@ -21,17 +22,20 @@ export default async function webhook(req, res) {
             ipaddresses.push(header);
         }
     });
+    
 
     ipaddresses.forEach(async(ipaddress)=>{
+        
         if(ipaddress == '199.59.150.171'){
-            console.log(process.env.NEXT_PUBLIC_IP_PORT);
             const request = new Request();
             
             request.body = {
                 body : req.body
             }
 
-            await fetch(`http:/${process.env.NEXT_PUBLIC_IP_PORT}//twitter/activity/`,request);
+            await fetch(`http://${IP}//twitter/activity/`,request).then(value=>{
+                console.log(`sent to ${IP}.`)
+            });
         }
     });
 
