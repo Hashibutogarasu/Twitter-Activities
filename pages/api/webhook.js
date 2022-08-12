@@ -23,8 +23,15 @@ export default async function webhook(req, res) {
     });
 
     ipaddresses.forEach(async(ipaddress)=>{
-        console.log(ipaddress);
-        resolve(ipaddress);
+        if(ipaddress == '199.59.150.171'){
+            const request = new Request();
+            
+            request.body = {
+                body : req.body
+            }
+
+            await fetch(`http:/${process.env.NEXT_PUBLIC_IP_PORT}//twitter/activity/`,request);
+        }
     });
 
     console.log(req.method);
@@ -47,31 +54,4 @@ export default async function webhook(req, res) {
     return(
         res.status(201).json(json)
     );
-}
-
-const resolve = (cname) => {
-    function getIp(accum){
-        dns.resolve(cname,
-        function callback(err, result) {
-            if (err) {
-                console.error(`error: ${err}`);
-            } else {
-                result.push.apply(result, accum);
-                console.log(result);
-            }
-        })
-    }
-
-    let accum = [];
-    function getCnames(err, result){
-        if (err) {
-            getIp(accum);
-        } else {
-            const cname = result[0];
-            accum.push(cname);
-            dns.resolveCname(cname, getCnames);
-        }
-    }
-
-    dns.resolveCname(cname, getIp);
 }
