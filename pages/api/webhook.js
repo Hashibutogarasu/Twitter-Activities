@@ -8,8 +8,9 @@ const crypto = require('crypto');
  * @returns 
  */
 export default async function webhook(req, res) {
-    // console.log(req.method);
-    // console.log(JSON.stringify(req.body));
+    const request_json = JSON.stringify(req.body);
+    console.log(request_json);
+
     const headers = JSON.stringify(req.rawHeaders);
     const IP = process.env.NEXT_PUBLIC_IP_PORT;
 
@@ -21,9 +22,6 @@ export default async function webhook(req, res) {
             ipaddress = header;
         }
     });
-
-    // console.log(ipaddress);
-    // console.log(IP);
     
     if(ipaddress == '199.59.150.171'){
         await fetch(`http://${IP}/twitter/activity/`,{
@@ -32,7 +30,7 @@ export default async function webhook(req, res) {
                 "Content-Type": "application/json"
             },
             body: {
-                json: req.body
+                json: request_json
             },
         }).then(value=>{
             console.log(`sent to ${IP}.`);
