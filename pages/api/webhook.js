@@ -1,16 +1,15 @@
-import { IncomingMessage, ServerResponse } from 'http';
 
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 const crypto = require('crypto');
-
+const { NextApiRequest, NextApiResponse } = require('next/dist/shared/lib/utils')
 /**
  * 
- * @param {IncomingMessage} req 
- * @param {ServerResponse} res 
+ * @param {NextApiRequest} req 
+ * @param {NextApiResponse} res 
  * @returns 
  */
 export default async function webhook(req, res) {
-    console.log(req.url);
+    console.log(req.cookies);
     const request_json = JSON.stringify(req.body);
     console.log(request_json);
 
