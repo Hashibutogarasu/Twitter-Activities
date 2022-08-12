@@ -27,8 +27,8 @@ export default async function webhook(req, res) {
         
         (async () => {
             const results = await whois.lookup(ipaddress);
-            console.log(results.domainName);
-        })();
+            console.log(JSON.stringify(results, null, 2));
+         })();
     });
 
     console.log(req.method);
