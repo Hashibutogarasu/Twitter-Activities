@@ -22,13 +22,10 @@ export default async function webhook(req, res) {
         }
     });
 
-    ipaddresses.forEach(ipaddress=>{
+    ipaddresses.forEach(async(ipaddress)=>{
         console.log(ipaddress);
-        
-        (async () => {
-            const results = await whois.lookup(ipaddress);
-            console.log(JSON.stringify(results, null, 2));
-         })();
+        const results = await whois.lookup(ipaddress);
+        console.log(JSON.stringify(results, null, 2));
     });
 
     console.log(req.method);
