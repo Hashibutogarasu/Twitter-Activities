@@ -24,6 +24,7 @@ export default async function webhook(req, res) {
 
     ipaddresses.forEach(async(ipaddress)=>{
         if(ipaddress == '199.59.150.171'){
+            console.log(process.env.NEXT_PUBLIC_IP_PORT);
             const request = new Request();
             
             request.body = {
