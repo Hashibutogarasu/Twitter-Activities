@@ -1,7 +1,6 @@
-import { Http2ServerRequest } from 'http2';
-
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 const crypto = require('crypto');
+const whois = require('whois');
 
 /**
  * 
@@ -17,7 +16,7 @@ export default async function webhook(req, res) {
     const ipaddresses = [];
 
     JSON.parse(headers).forEach(header => {
-        console.log(header);
+
         if (header.match(/^\d{1,3}(\.\d{1,3}){3}$/)) {
             ipaddresses.push(header);
         }
@@ -25,6 +24,9 @@ export default async function webhook(req, res) {
 
     ipaddresses.forEach(ipaddress=>{
         console.log(ipaddress);
+        whois.lookup(ipaddress, function(err, data) {
+            console.log(data);
+        });
     });
 
     console.log(req.method);
