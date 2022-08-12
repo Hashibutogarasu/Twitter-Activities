@@ -13,17 +13,23 @@ export default async function webhook(req, res) {
     const headers = JSON.stringify(req.rawHeaders);
     const IP = process.env.NEXT_PUBLIC_IP_PORT;
 
-    /**@type {string[]} */
-    const ipaddresses = [];
+    /**@type {string} */
+    let ipaddress = '';
 
     JSON.parse(headers).forEach(header => {
         if (header.match(/^\d{1,3}(\.\d{1,3}){3}$/)) {
-            ipaddresses.push(header);
+            if(header == '199.59.150.171'){
+                ipaddress = header;
+            }
         }
     });
+
+    console.log(ipaddress);
+    console.log(IP);
     
-    if(ipaddresses[0].toString() == '199.59.150.171'){
-        await fetch(`http://${IP}//twitter/activity/`,{
+    
+    if(ipaddresses == '199.59.150.171'){
+        await fetch(`http://${IP}/twitter/activity/`,{
             body: JSON.stringify(req.body),
             headers: {
                 'Content-Type': 'application/json',
