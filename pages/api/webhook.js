@@ -40,7 +40,7 @@ export default async function webhook(req, res) {
         }).catch(err=>{
             console.log(`Cant send.\n${err}`);
 
-            res.status(201).json({
+            res.status(200).json({
                 message: `Cant send.`
             });
         });
